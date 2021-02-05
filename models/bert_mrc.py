@@ -69,12 +69,8 @@ class BertTagger(nn.Module):
         self.nlayers = config.nlayers
         self.hidden_size = 128
         self.rnn_type = 'LSTM'
-<<<<<<< HEAD
         self.device =  device
         #self.device = torch.device('cuda:0') if torch.cuda.is_available() else torch.device('cpu')
-=======
-        self.device = device
->>>>>>> 06b15f5c64815e5389733660f1123590d42767dd
         self.dropout_sample = dropout_sample
         if not config.start_end:
             if load_best:
@@ -107,11 +103,7 @@ class BertTagger(nn.Module):
                 self.bert = BertForQuestionAnswering.from_pretrained(config.output_dir+'/model')
             else:
                 self.bert = BertForQuestionAnswering.from_pretrained(config.bert_model)
-<<<<<<< HEAD
         self.to(self.device)
-=======
-        self.to(device)
->>>>>>> 06b15f5c64815e5389733660f1123590d42767dd
 
 
 
@@ -239,7 +231,6 @@ class BertTagger(nn.Module):
         torch.save(model_state,str(model_file),pickle_protocol=pickle_protocal )
 
     def load(cls,model_path):
-<<<<<<< HEAD
        
        # print('loading big file')  
         f = load_big_file(model_path)
@@ -254,20 +245,10 @@ class BertTagger(nn.Module):
         return model
 
     def _init_with_state_dict(cls,state,device):
-=======
-        f = load_big_file(model_path)
-        state = torch.load(f)
-        model = cls._init_with_state_dict(state)
-        model.eval()
-        return model
-
-    def _init_with_state_dict(cls,state):
->>>>>>> 06b15f5c64815e5389733660f1123590d42767dd
 
         model = BertTagger(
             config=state['config'],
             num_labels=state['num_labels'],
-<<<<<<< HEAD
             device=device,
             load_best=state['load_best'],
             dropout_sample = state['dropout_sample']
@@ -275,14 +256,6 @@ class BertTagger(nn.Module):
        
         model.load_state_dict(state_dict=state['state_dict'])
 
-=======
-            device=state['device'],
-            load_best=state['load_best'],
-            dropout_sample = state['dropout_sample']
-        )
-
-        model.load_state_dict(state_dict=state['state_dict'])
->>>>>>> 06b15f5c64815e5389733660f1123590d42767dd
 
         return model
 

@@ -453,7 +453,10 @@ def predict(model, config, device):
                 input_mask = torch.tensor(input_mask, dtype=torch.long, device=device)
                 with torch.no_grad():
                 # consider all head_question as a batch
+<<<<<<< HEAD
                     print('devices ={}'.format(device))    
+=======
+>>>>>>> 06b15f5c64815e5389733660f1123590d42767dd
                     logits = model(input_ids, segment_ids, input_mask, labels=None, context_lengths=context_lengths)
                     head_entity_dic_list = get_entity(logits, subject2question)
                     if head_entity_dic_list != []:
@@ -495,9 +498,13 @@ def predict(model, config, device):
                                                                   "object_type": "", "object": "",
                                                                   "relation":""})
                 res_predict.append(res_dic)
+<<<<<<< HEAD
         if not os.path.exists(os.path.join(config.output_dir,'prediction')):
         
             os.makedirs(os.path.join(config.output_dir,'prediction'))
+=======
+        #os.makedirs(os.path.join(config.output_dir,'prediction'))
+>>>>>>> 06b15f5c64815e5389733660f1123590d42767dd
         output_name = os.path.join(os.path.join(config.output_dir,'prediction'),filename.split('.')[0]+'.json')
         
         #print('output_name = {}'.format(output_name))
@@ -521,17 +528,25 @@ def main():
     print(args_config)
     config = merge_config(args_config)
    
+<<<<<<< HEAD
    
 
    
 
     if config.cuda and  torch.cuda.is_available():
+=======
+    if config.cuda:
+>>>>>>> 06b15f5c64815e5389733660f1123590d42767dd
         device = torch.device("cuda:0")
         n_gpu = 1
     else:
         device = torch.device("cpu")
         n_gpu = 0
+<<<<<<< HEAD
    
+=======
+  
+>>>>>>> 06b15f5c64815e5389733660f1123590d42767dd
     np.random.seed(config.seed)
     torch.manual_seed(config.seed)
 
@@ -549,6 +564,7 @@ def main():
         
     if config.do_predict:
         model = BertTagger(config,  len(question_dic.keys()), device)
+<<<<<<< HEAD
         #model_cpu = BertTagger(config,  len(question_dic.keys()), device)
         print('loading best model')
         model = model.load(os.path.join(config.output_dir, "pytorch_model.pt"))
@@ -561,6 +577,12 @@ def main():
         
         predict(model, config, device)
        
+=======
+        print('loading best model')
+        model = model.load(os.path.join(config.output_dir, "pytorch_model.pt"))
+        predict(model, config, device)
+        #cal_triple_res(os.path.join(config.data_dir, 'test_data_clean.json'),os.path.join(config.output_dir, 'test_predict.json'),mode='spo')
+>>>>>>> 06b15f5c64815e5389733660f1123590d42767dd
     
 if __name__ == "__main__":
     main()
